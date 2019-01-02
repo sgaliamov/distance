@@ -62,6 +62,7 @@
   <ItemGroup>
     <Build Include="Locations.sql" />
     <PostDeploy Include="Scripts\PostDeployment.sql" />
+    <Build Include="GetLocations.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\test-data.sql" />
