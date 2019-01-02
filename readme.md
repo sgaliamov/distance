@@ -12,4 +12,20 @@ Locations at a given distance.
 
 ## Roadmap
 
+- [x] research, find algorithm: <https://en.wikipedia.org/wiki/Spatial_database#Spatial_index>
+- [x] check sql server capabilities
+- [ ] create repo and data structures
+- [ ] create BLL
+- [ ] try spatial index
+- [ ] create cli
+- [ ] create webapi
+- [ ] create web client?
+
 ## Reasoning
+
+- why sql server?
+  - tested solution
+  - maintanability
+  - integration with other data
+- <http://epsg.io/4326>
+- <https://www.movable-type.co.uk/scripts/latlong.html>
