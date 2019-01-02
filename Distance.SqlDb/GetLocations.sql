@@ -11,7 +11,9 @@ AS BEGIN
     END
     
     DECLARE @Statement VARCHAR(4000) = CONCAT(
-        'SELECT ', @CountStatement, ' [Address], [Coordinate]
+        'SELECT ', @CountStatement, ' [Address], 
+            [Coordinate].Long AS [Longitude], [Coordinate].Lat AS [Latitude], 
+            [Coordinate].STDistance(@Point) AS [Distance]
             FROM [dbo].[Locations]
             WHERE @Distance IS NULL OR [Coordinate].STDistance(@Point) <= @Distance
             ORDER BY [Coordinate].STDistance(@Point)')
