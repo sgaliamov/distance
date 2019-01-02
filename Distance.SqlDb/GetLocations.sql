@@ -5,12 +5,12 @@
     @Distance INT NULL
 AS BEGIN
     DECLARE @Point GEOGRAPHY = CONCAT('POINT(', @Longitude,' ', @Latitude,')')
-    DECLARE @CountStatement VARCHAR(11) = ''
+    DECLARE @CountStatement VARCHAR(4000) = ''
     IF @Count IS NOT NULL BEGIN
         SET @CountStatement = CONCAT('TOP(', @Count, ')')
     END
     
-    DECLARE @Statement NVARCHAR(4000) = CONCAT(
+    DECLARE @Statement VARCHAR(4000) = CONCAT(
         'SELECT ', @CountStatement, ' [Address], [Coordinate]
             FROM [dbo].[Locations]
             WHERE @Distance IS NULL OR [Coordinate].STDistance(@Point) <= @Distance

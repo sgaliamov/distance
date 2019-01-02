@@ -28,7 +28,8 @@ namespace Distance
                                           location.Latitude,
                                           Count = maxResults,
                                           Distance = maxDistance
-                                      })
+                                      },
+                                      commandType: CommandType.StoredProcedure)
                                   .ConfigureAwait(false);
 
             return new SearchResult
