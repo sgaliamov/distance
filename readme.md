@@ -20,6 +20,7 @@ Locations at a given distance.
 - [ ] create cli
 - [ ] create webapi
 - [ ] create web client?
+- [ ] T4 to generate sql constants
 
 ## Reasoning
 
