@@ -4,7 +4,6 @@ Locations at a given distance.
 
 ## Requirements
 
-* The system must be written in C#.
 * It must be possible to set a maximum distance.
 * It must be possible to set a maximum number of results.
 * Results should be ordered by distance.
@@ -14,9 +13,10 @@ Locations at a given distance.
 
 - [x] research, find algorithm: <https://en.wikipedia.org/wiki/Spatial_database#Spatial_index>
 - [x] check sql server capabilities
-- [ ] create repo and data structures
+- [x] create repo and data structures
 - [ ] create BLL
 - [ ] try spatial index
+- [ ] IoC
 - [ ] create cli
 - [ ] create webapi
 - [ ] create web client?

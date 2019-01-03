@@ -1,7 +1,6 @@
-using System;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Distance.Models;
+using Distance.DataAccess;
 using FluentAssertions;
 using Xunit;
 
@@ -16,9 +15,9 @@ namespace Distance.Tests
             {
                 var repository = new LocationsRepository(connection);
 
-                var result = await repository.GetLocations(new Location(0, 0), null, 10).ConfigureAwait(false);
+                var result = await repository.GetLocations(0, 0, 100000, 10).ConfigureAwait(false);
 
-                result.Locations.Should().HaveCount(10);
+                result.Should().HaveCount(10);
             }
         }
     }

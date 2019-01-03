@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using Distance.Models;
+using Distance.DataAccess.Entities;
 
-namespace Distance
+namespace Distance.DataAccess
 {
-    public sealed class LocationsRepository
+    public sealed class LocationsRepository : ILocationsRepository
     {
         private const string GetLocationsStoredProcedure = "[dbo].[GetLocations]";
 
@@ -17,25 +17,26 @@ namespace Distance
             _connection = connection;
         }
 
-        public async Task<SearchResult> GetLocations(Location location, int? maxDistance, int? maxResults)
+        public async Task<LocationEntity[]> GetLocations(
+            double longitude,
+            double latitude,
+            int? maxDistance,
+            int? maxResults)
         {
             var locations = await _connection
-                                  .QueryAsync<LocationAddress>(
+                                  .QueryAsync<LocationEntity>(
                                       GetLocationsStoredProcedure,
                                       new
                                       {
-                                          location.Longitude,
-                                          location.Latitude,
+                                          Longitude = longitude,
+                                          Latitude = latitude,
                                           Count = maxResults,
                                           Distance = maxDistance
                                       },
                                       commandType: CommandType.StoredProcedure)
                                   .ConfigureAwait(false);
 
-            return new SearchResult
-            {
-                Locations = locations.ToArray()
-            };
+            return locations.ToArray();
         }
     }
 }
