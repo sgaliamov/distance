@@ -58,11 +58,13 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Scripts" />
+    <Folder Include="Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Locations.sql" />
     <PostDeploy Include="Scripts\PostDeployment.sql" />
-    <Build Include="GetLocations.sql" />
+    <Build Include="Stored Procedures\GetLocations.sql" />
+    <Build Include="Stored Procedures\InserLocation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\test-data.sql" />
