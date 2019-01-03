@@ -6,14 +6,14 @@ using Distance.DataAccess.Entities;
 
 namespace Distance.DataAccess
 {
-    public sealed class LocationsRepository : ILocationsRepository
+    public sealed class LocationsSqlRepository : ILocationsRepository
     {
         private const string GetLocationsStoredProcedure = "[dbo].[GetLocations]";
         private const string InsertLocationsStoredProcedure = "[dbo].[InsertLocation]";
 
         private readonly SqlConnectionFactory _sqlConnectionFactory;
 
-        public LocationsRepository(SqlConnectionFactory sqlConnectionFactory)
+        public LocationsSqlRepository(SqlConnectionFactory sqlConnectionFactory)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }
