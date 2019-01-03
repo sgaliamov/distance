@@ -14,11 +14,12 @@ Locations at a given distance.
 - [x] research, find algorithm: <https://en.wikipedia.org/wiki/Spatial_database#Spatial_index>
 - [x] check sql server capabilities
 - [x] create repo and data structures
-- [ ] create BLL
-- [ ] try spatial index
-- [ ] IoC
-- [ ] create cli
+- [x] create BLL
+- [x] try spatial index
 - [ ] create webapi
+- [ ] IoC
+- [ ] r tree
+- [ ] create benchmark
 - [ ] create web client?
 - [ ] T4 to generate sql constants
 

@@ -1,1 +1,1 @@
-﻿:r .\test-data.sql
+﻿-- :r .\test-data.sql

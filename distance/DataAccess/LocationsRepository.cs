@@ -9,7 +9,7 @@ namespace Distance.DataAccess
     public sealed class LocationsRepository : ILocationsRepository
     {
         private const string GetLocationsStoredProcedure = "[dbo].[GetLocations]";
-        private const string InsertLocationsStoredProcedure = "[dbo].[InsertLocations]";
+        private const string InsertLocationsStoredProcedure = "[dbo].[InsertLocation]";
 
         private readonly SqlConnectionFactory _sqlConnectionFactory;
 
@@ -53,7 +53,8 @@ namespace Distance.DataAccess
                                                Longitude = longitude,
                                                Latitude = latitude,
                                                Address = address
-                                           })
+                                           },
+                                           commandType: CommandType.StoredProcedure)
                                        .ConfigureAwait(false);
             }
         }
