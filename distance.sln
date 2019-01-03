@@ -18,6 +18,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Distance.SqlDb", "Distance.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distance.CLI", "Distance.CLI\Distance.CLI.csproj", "{943D8B84-3DA3-4A39-920F-94025ECD7F68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distance.WebApi", "Distance.WebApi\Distance.WebApi.csproj", "{7A56EAA4-ACAD-452B-BA90-A7443286D072}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{943D8B84-3DA3-4A39-920F-94025ECD7F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{943D8B84-3DA3-4A39-920F-94025ECD7F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{943D8B84-3DA3-4A39-920F-94025ECD7F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
