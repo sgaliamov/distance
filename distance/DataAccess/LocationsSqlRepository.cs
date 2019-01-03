@@ -19,8 +19,8 @@ namespace Distance.DataAccess
         }
 
         public async Task<LocationEntity[]> GetLocations(
-            double longitude,
             double latitude,
+            double longitude,
             int? maxDistance,
             int? maxResults)
         {
@@ -42,7 +42,7 @@ namespace Distance.DataAccess
             }
         }
 
-        public async Task<long> CreateLocation(double longitude, double latitude, string address)
+        public async Task<long> CreateLocation(double latitude, double longitude, string address)
         {
             using (var connection = _sqlConnectionFactory.GetConnection())
             {

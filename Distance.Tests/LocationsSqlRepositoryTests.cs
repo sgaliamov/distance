@@ -30,10 +30,10 @@ namespace Distance.Tests
         [Fact]
         public async Task Haarlem_Is_Close_To_Amsterdam()
         {
-            await _repository.CreateLocation(AmsterdamLongitude, AmsterdamLatitude, Amsterdam).ConfigureAwait(false);
-            await _repository.CreateLocation(NewYorkLongitude, NewYorkLatitude, NewYork).ConfigureAwait(false);
+            await _repository.CreateLocation(AmsterdamLatitude, AmsterdamLongitude, Amsterdam).ConfigureAwait(false);
+            await _repository.CreateLocation(NewYorkLatitude, NewYorkLongitude, NewYork).ConfigureAwait(false);
 
-            var result = await _repository.GetLocations(HaarlemLongitude, HaarlemLatitude, 30000, null).ConfigureAwait(false);
+            var result = await _repository.GetLocations(HaarlemLatitude, HaarlemLongitude, 20000, null).ConfigureAwait(false);
 
             result.Should().HaveCount(1);
             result[0].Address.Should().Be(Amsterdam);
@@ -42,10 +42,10 @@ namespace Distance.Tests
         [Fact]
         public async Task Haarlem_Is_Not_To_Close_To_Amsterdam()
         {
-            await _repository.CreateLocation(AmsterdamLongitude, AmsterdamLatitude, Amsterdam).ConfigureAwait(false);
-            await _repository.CreateLocation(NewYorkLongitude, NewYorkLatitude, NewYork).ConfigureAwait(false);
+            await _repository.CreateLocation(AmsterdamLatitude, AmsterdamLongitude, Amsterdam).ConfigureAwait(false);
+            await _repository.CreateLocation(NewYorkLatitude, NewYorkLongitude, NewYork).ConfigureAwait(false);
 
-            var result = await _repository.GetLocations(HaarlemLongitude, HaarlemLatitude, 10000, null).ConfigureAwait(false);
+            var result = await _repository.GetLocations(HaarlemLatitude, HaarlemLongitude, 10000, null).ConfigureAwait(false);
 
             result.Should().HaveCount(0);
         }
@@ -53,7 +53,7 @@ namespace Distance.Tests
         [Fact]
         public async Task Insert_Amsterdam()
         {
-            var result = await _repository.CreateLocation(AmsterdamLongitude, AmsterdamLatitude, Amsterdam).ConfigureAwait(false);
+            var result = await _repository.CreateLocation(AmsterdamLatitude, AmsterdamLongitude, Amsterdam).ConfigureAwait(false);
 
             result.Should().BeGreaterThan(0);
         }
@@ -61,9 +61,9 @@ namespace Distance.Tests
         [Fact]
         public async Task Locations_Are_Presented_In_Sorted_Order()
         {
-            await _repository.CreateLocation(AmsterdamLongitude, AmsterdamLatitude, Amsterdam).ConfigureAwait(false);
-            await _repository.CreateLocation(NewYorkLongitude, NewYorkLatitude, NewYork).ConfigureAwait(false);
-            await _repository.CreateLocation(HaarlemLongitude, HaarlemLatitude, Haarlem).ConfigureAwait(false);
+            await _repository.CreateLocation(AmsterdamLatitude, AmsterdamLongitude, Amsterdam).ConfigureAwait(false);
+            await _repository.CreateLocation(NewYorkLatitude, NewYorkLongitude, NewYork).ConfigureAwait(false);
+            await _repository.CreateLocation(HaarlemLatitude, HaarlemLongitude, Haarlem).ConfigureAwait(false);
 
             var result = await _repository.GetLocations(0, 0, null, null).ConfigureAwait(false);
 
@@ -76,26 +76,26 @@ namespace Distance.Tests
         [Fact]
         public async Task Only_Closest_Location_Is_Found()
         {
-            await _repository.CreateLocation(AmsterdamLongitude, AmsterdamLatitude, Amsterdam).ConfigureAwait(false);
-            await _repository.CreateLocation(NewYorkLongitude, NewYorkLatitude, NewYork).ConfigureAwait(false);
+            await _repository.CreateLocation(AmsterdamLatitude, AmsterdamLongitude, Amsterdam).ConfigureAwait(false);
+            await _repository.CreateLocation(NewYorkLatitude, NewYorkLongitude, NewYork).ConfigureAwait(false);
 
-            var result = await _repository.GetLocations(HaarlemLongitude, HaarlemLatitude, null, 1).ConfigureAwait(false);
+            var result = await _repository.GetLocations(HaarlemLatitude, HaarlemLongitude, null, 1).ConfigureAwait(false);
 
             result.Should().HaveCount(1);
             result[0].Address.Should().Be(Amsterdam);
         }
 
         private const string Amsterdam = "Amsterdam";
-        private const double AmsterdamLongitude = 52.3546274;
-        private const double AmsterdamLatitude = 4.8285836;
+        private const double AmsterdamLatitude = 52.3546274;
+        private const double AmsterdamLongitude = 4.8285836;
         private const string NewYork = "New York";
-        private const double NewYorkLongitude = 40.6971494;
-        private const double NewYorkLatitude = -74.2598643;
+        private const double NewYorkLatitude = 40.6971494;
+        private const double NewYorkLongitude = -74.2598643;
         private const string Haarlem = "Haarlem";
-        private const double HaarlemLongitude = 52.3837711;
-        private const double HaarlemLatitude = 4.5728393;
+        private const double HaarlemLatitude = 52.3837711;
+        private const double HaarlemLongitude = 4.5728393;
 
-        private readonly LocationsSqlRepository _repository;
+        private readonly ILocationsRepository _repository;
         private readonly TransactionScope _transactionScope;
     }
 }

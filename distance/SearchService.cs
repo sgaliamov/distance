@@ -15,7 +15,7 @@ namespace Distance
         public async Task<SearchResult> GetLocations(Location location, int maxDistance, int maxResults)
         {
             var locations = await _locationsRepository
-                                  .GetLocations(location.Longitude, location.Latitude, maxDistance, maxResults)
+                                  .GetLocations(location.Latitude, location.Longitude, maxDistance, maxResults)
                                   .ConfigureAwait(false);
 
             return new SearchResult
