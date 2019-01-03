@@ -10,11 +10,11 @@ namespace Distance.DataAccess
     {
         private const string GetLocationsStoredProcedure = "[dbo].[GetLocations]";
 
-        private readonly IDbConnection _connection;
+        private readonly SqlConnectionFactory _sqlConnectionFactory;
 
-        public LocationsRepository(IDbConnection connection)
+        public LocationsRepository(SqlConnectionFactory sqlConnectionFactory)
         {
-            _connection = connection;
+            _sqlConnectionFactory = sqlConnectionFactory;
         }
 
         public async Task<LocationEntity[]> GetLocations(
@@ -23,20 +23,23 @@ namespace Distance.DataAccess
             int? maxDistance,
             int? maxResults)
         {
-            var locations = await _connection
-                                  .QueryAsync<LocationEntity>(
-                                      GetLocationsStoredProcedure,
-                                      new
-                                      {
-                                          Longitude = longitude,
-                                          Latitude = latitude,
-                                          Count = maxResults,
-                                          Distance = maxDistance
-                                      },
-                                      commandType: CommandType.StoredProcedure)
-                                  .ConfigureAwait(false);
+            using (var connection = _sqlConnectionFactory.GetConnection())
+            {
+                var locations = await connection
+                                      .QueryAsync<LocationEntity>(
+                                          GetLocationsStoredProcedure,
+                                          new
+                                          {
+                                              Longitude = longitude,
+                                              Latitude = latitude,
+                                              Count = maxResults,
+                                              Distance = maxDistance
+                                          },
+                                          commandType: CommandType.StoredProcedure)
+                                      .ConfigureAwait(false);
 
-            return locations.ToArray();
+                return locations.ToArray();
+            }
         }
     }
 }
