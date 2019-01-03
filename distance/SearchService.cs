@@ -3,7 +3,7 @@ using Distance.Models;
 
 namespace Distance
 {
-    public sealed class SearchService
+    public sealed class SearchService : ISearchService
     {
         private readonly ILocationsRepository _locationsRepository;
 
