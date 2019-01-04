@@ -18,6 +18,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Distance.SqlDb", "Distance.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distance.WebApi", "Distance.WebApi\Distance.WebApi.csproj", "{7A56EAA4-ACAD-452B-BA90-A7443286D072}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distance.Benchmarks", "Distance.Benchmarks\Distance.Benchmarks.csproj", "{4979B432-56E8-4E18-A960-AD9BA312B068}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A56EAA4-ACAD-452B-BA90-A7443286D072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4979B432-56E8-4E18-A960-AD9BA312B068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4979B432-56E8-4E18-A960-AD9BA312B068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4979B432-56E8-4E18-A960-AD9BA312B068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4979B432-56E8-4E18-A960-AD9BA312B068}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
