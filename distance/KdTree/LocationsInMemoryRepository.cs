@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Distance.DataAccess.Entities;
@@ -42,7 +43,7 @@ namespace Distance.Knn
             }
         }
 
-        private struct Location
+        private struct Location : IEquatable<Location>
         {
             public string Address { get; }
             public double Latitude { get; }
@@ -53,6 +54,34 @@ namespace Distance.Knn
                 Address = address;
                 Latitude = latitude;
                 Longitude = longitude;
+            }
+
+            public bool Equals(Location other)
+            {
+                return string.Equals(Address, other.Address)
+                       && Latitude.Equals(other.Latitude)
+                       && Longitude.Equals(other.Longitude);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj))
+                {
+                    return false;
+                }
+
+                return obj is Location other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashCode = Address != null ? Address.GetHashCode() : 0;
+                    hashCode = (hashCode * 397) ^ Latitude.GetHashCode();
+                    hashCode = (hashCode * 397) ^ Longitude.GetHashCode();
+                    return hashCode;
+                }
             }
         }
     }
