@@ -16,9 +16,10 @@ Locations at a given distance.
 - [x] create repo and data structures
 - [x] create BLL
 - [x] try spatial index
-- [ ] create webapi
-- [ ] IoC
-- [ ] r tree
+- [x] create webapi
+- [x] IoC
+- [ ] edge cases
+- [ ] brute force
 - [ ] create benchmark
 - [ ] create web client?
 - [ ] T4 to generate sql constants
@@ -27,7 +28,7 @@ Locations at a given distance.
 
 - why sql server?
   - tested solution
-  - maintanability
+  - maintainability
   - integration with other data
 - <http://epsg.io/4326>
 - <https://www.movable-type.co.uk/scripts/latlong.html>

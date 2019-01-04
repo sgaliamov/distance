@@ -46,16 +46,17 @@ namespace Distance.Sql
         {
             using (var connection = _sqlConnectionFactory.GetConnection())
             {
-                return await connection.ExecuteScalarAsync<long>(
-                                           InsertLocationsStoredProcedure,
-                                           new
-                                           {
-                                               Longitude = longitude,
-                                               Latitude = latitude,
-                                               Address = address
-                                           },
-                                           commandType: CommandType.StoredProcedure)
-                                       .ConfigureAwait(false);
+                return await connection
+                             .ExecuteScalarAsync<long>(
+                                 InsertLocationsStoredProcedure,
+                                 new
+                                 {
+                                     Longitude = longitude,
+                                     Latitude = latitude,
+                                     Address = address
+                                 },
+                                 commandType: CommandType.StoredProcedure)
+                             .ConfigureAwait(false);
             }
         }
     }

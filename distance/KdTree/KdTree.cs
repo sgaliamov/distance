@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Distance.Models;
 
 namespace Distance.KdTree
 {
@@ -8,16 +9,16 @@ namespace Distance.KdTree
     {
         private Node _root;
 
-        public void Build(Point[] points)
+        public void Build(IEnumerable<Location> locations)
         {
-            var copy = points.ToArray();
+            var copy = locations.ToArray();
 
-            _root = Build(copy, 0, points.Length, 0);
+            _root = Build(copy, 0, copy.Length, 0);
         }
 
-        public NodeDistance[] Nearest(Point target, double radius)
+        public Location[] Nearest(Coordinates target, double radius)
         {
-            var result = new LinkedList<NodeDistance>();
+            var result = new LinkedList<Location>(); // todo: benchmark
 
             Nearest(_root, target, radius, result);
 
@@ -26,21 +27,21 @@ namespace Distance.KdTree
 
         private static void Nearest(
             Node current,
-            Point target,
+            Coordinates target,
             double radius,
-            ICollection<NodeDistance> result)
+            ICollection<Location> result)
         {
-            var d = Distance(target, current.Position);
+            var d = target.Distance(current.Location.Coordinates);
             if (d <= radius)
             {
-                result.Add(new NodeDistance(current, d));
+                result.Add(new Location(current.Location.Address, current.Location.Coordinates, d));
             }
 
-            var value = target.Coordinates[current.Axis];
-            var median = current.Position.Coordinates[current.Axis];
+            var value = target.Values[current.Axis];
+            var median = current.Location.Coordinates.Values[current.Axis];
             var u = value - median;
 
-            if (u > 0) // todo: use stack
+            if (u > 0)
             {
                 if (current.Right != null)
                 {
@@ -66,22 +67,7 @@ namespace Distance.KdTree
             }
         }
 
-        private static double Distance(Point x, Point y)
-        {
-            var lat1 = x.Coordinates[0];
-            var long1 = x.Coordinates[1];
-            var lat2 = y.Coordinates[0];
-            var long2 = y.Coordinates[1];
-
-            var rLat1 = Math.PI * lat1 / 180;
-            var rLat2 = Math.PI * lat2 / 180;
-            var rTheta = Math.PI * (long2 - long1) / 180;
-            var dist = Math.Sin(rLat1) * Math.Sin(rLat2) + Math.Cos(rLat1) * Math.Cos(rLat2) * Math.Cos(rTheta);
-
-            return Math.Acos(dist) * 180 * 60 * 1.1515 * 1609.344 / Math.PI;
-        }
-
-        private static Node Build(Point[] points, int start, int length, int depth)
+        private static Node Build(Location[] locations, int start, int length, int depth)
         {
             if (length <= 0)
             {
@@ -89,10 +75,10 @@ namespace Distance.KdTree
             }
 
             var axis = depth % 3;
-            Array.Sort(points, start, length, PointAxisComparer.Get(axis));
+            Array.Sort(locations, start, length, CoordinatesComparer.Get(axis));
 
             var half = start + length / 2;
-            var median = points[half];
+            var median = locations[half];
 
             var leftStart = start;
             var leftLength = half - start;
@@ -100,22 +86,22 @@ namespace Distance.KdTree
             var rightStart = half + 1;
             var rightLength = length - length / 2 - 1;
 
-            var left = Build(points, leftStart, leftLength, depth + 1);
-            var right = Build(points, rightStart, rightLength, depth + 1);
+            var left = Build(locations, leftStart, leftLength, depth + 1);
+            var right = Build(locations, rightStart, rightLength, depth + 1);
 
             return new Node(median, left, right, axis);
         }
 
-        private sealed class Node
+        private sealed class Node // todo: benchmark with struct
         {
             public readonly int Axis;
             public readonly Node Left;
-            public readonly Point Position;
+            public readonly Location Location;
             public readonly Node Right;
 
-            public Node(Point position, Node left, Node right, int axis)
+            public Node(Location location, Node left, Node right, int axis)
             {
-                Position = position;
+                Location = location;
                 Left = left;
                 Right = right;
                 Axis = axis;
