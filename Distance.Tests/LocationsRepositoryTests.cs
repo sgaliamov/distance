@@ -69,6 +69,21 @@ namespace Distance.Tests
         }
 
         [Fact]
+        public async Task Nearest_On_Poles()
+        {
+            await Repository.AddLocation(new Coordinates(89, -1), "one").ConfigureAwait(false);
+            await Repository.AddLocation(new Coordinates(89, -179), "another").ConfigureAwait(false);
+
+            var one = await Repository.GetLocations(new Coordinates(89, 1), 4_000, null).ConfigureAwait(false);
+            one.Should().HaveCount(1);
+            one[0].Address.Should().Be("one");
+
+            var another = await Repository.GetLocations(new Coordinates(89, 179), 4_000, null).ConfigureAwait(false);
+            another.Should().HaveCount(1);
+            another[0].Address.Should().Be("another");
+        }
+
+        [Fact]
         public async Task Only_Closest_Location_Is_Found()
         {
             await Repository.AddLocation(AmsterdamCoordinates, Amsterdam).ConfigureAwait(false);
