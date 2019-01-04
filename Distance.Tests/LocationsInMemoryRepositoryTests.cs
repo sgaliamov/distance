@@ -1,4 +1,4 @@
-using Distance.Knn;
+using Distance.KdTree;
 
 namespace Distance.Tests
 {

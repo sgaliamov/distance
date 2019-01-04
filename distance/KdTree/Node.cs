@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Distance.KdTree
 {
@@ -18,12 +19,9 @@ namespace Distance.KdTree
             Axis = axis;
         }
 
-        public NodeDistance[] Nearest(
-            Node current,
-            Point target,
-            double radius)
+        public NodeDistance[] Nearest(Point target, double radius)
         {
-            var result = new List<NodeDistance>();
+            var result = new LinkedList<NodeDistance>();
 
             Nearest(this, target, radius, result);
 
@@ -46,7 +44,7 @@ namespace Distance.KdTree
             var median = current.Position.Coordinates[current.Axis];
             var u = value - median;
 
-            if (u > 0)
+            if (u > 0) // todo: use stack
             {
                 if (current.Right != null)
                 {
@@ -74,18 +72,17 @@ namespace Distance.KdTree
 
         private static double Distance(Point x, Point y)
         {
-            var xCoordinates = x.Coordinates;
-            var yCoordinates = y.Coordinates;
+            var lat1 = x.Coordinates[0];
+            var long1 = x.Coordinates[1];
+            var lat2 = y.Coordinates[0];
+            var long2 = y.Coordinates[1];
 
-            double result = 0;
-            for (var i = 0; i < xCoordinates.Length; i++)
-            {
-                var a = xCoordinates[i] - yCoordinates[i];
+            var rLat1 = Math.PI * lat1 / 180;
+            var rLat2 = Math.PI * lat2 / 180;
+            var rTheta = Math.PI * (long2 - long1) / 180;
+            var dist = Math.Sin(rLat1) * Math.Sin(rLat2) + Math.Cos(rLat1) * Math.Cos(rLat2) * Math.Cos(rTheta);
 
-                result += a * a;
-            }
-
-            return result;
+            return Math.Acos(dist) * 180 * 60 * 1.1515 * 1609.344 / Math.PI;
         }
     }
 }

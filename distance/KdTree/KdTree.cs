@@ -1,17 +1,20 @@
 ﻿using System;
+using System.Linq;
 
 namespace Distance.KdTree
 {
-    public sealed class KdTree
+    public static class KdTree
     {
-        public Node Build(Point[] points)
+        public static Node Build(Point[] points)
         {
-            return Build(points, 0, points.Length, 0);
+            var copy = points.ToArray();
+
+            return Build(copy, 0, points.Length, 0);
         }
 
         private static Node Build(Point[] points, int start, int length, int depth)
         {
-            if (points.Length == 0)
+            if (length <= 0)
             {
                 return null;
             }

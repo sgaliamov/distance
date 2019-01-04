@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Distance.DataAccess.Entities;
-using Distance.Knn.KdTree;
 
-namespace Distance.Knn
+namespace Distance.KdTree
 {
     public sealed class LocationsInMemoryRepository : ILocationsRepository
     {
         private readonly List<Location> _locations = new List<Location>();
-        private SphereSearch<Location> _search;
+        private Node _root;
 
         public Task<LocationEntity[]> GetLocations(double latitude, double longitude, int? maxDistance, int? maxResults)
         {
             BuildIfChanged();
 
-            var result = _search.LookupDistance(
-                                    new Location(latitude, longitude, null),
-                                    maxResults ?? int.MaxValue,
-                                    maxDistance ?? double.MaxValue)
-                                .Select(x => new LocationEntity(x.Item1.Address, x.Item1.Latitude, x.Item1.Longitude, x.Item2))
-                                .ToArray();
+            var result = _root.Nearest(new Point(-1, latitude, longitude), maxDistance ?? double.MaxValue)
+                              .OrderBy(x => x.Distance)
+                              .Select(x => new LocationEntity(
+                                  _locations[x.Node.Position.Id].Address,
+                                  x.Node.Position.Coordinates[0],
+                                  x.Node.Position.Coordinates[1],
+                                  x.Distance));
 
-            return Task.FromResult(result);
+            if (maxResults.HasValue)
+            {
+                result = result.Take(maxResults.Value);
+            }
+
+            return Task.FromResult(result.ToArray());
         }
 
         public Task<long> AddLocation(double latitude, double longitude, string address)
         {
-            _search = null;
+            _root = null;
 
             _locations.Add(new Location(latitude, longitude, address));
 
@@ -37,9 +42,13 @@ namespace Distance.Knn
 
         private void BuildIfChanged()
         {
-            if (_search == null)
+            if (_root == null)
             {
-                _search = new SphereSearch<Location>(_locations, c => Cartesian.FromSpherical(c.Latitude, c.Longitude));
+                var points = _locations
+                             .Select((x, i) => new Point(i, x.Latitude, x.Longitude))
+                             .ToArray();
+
+                _root = KdTree.Build(points);
             }
         }
 

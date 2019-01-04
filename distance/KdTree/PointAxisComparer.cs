@@ -5,7 +5,8 @@ namespace Distance.KdTree
 {
     public sealed class PointAxisComparer : IComparer<Point>
     {
-        private static readonly ConcurrentDictionary<int, IComparer<Point>> Comparers = new ConcurrentDictionary<int, IComparer<Point>>();
+        private static readonly ConcurrentDictionary<int, IComparer<Point>> Comparers 
+            = new ConcurrentDictionary<int, IComparer<Point>>();
 
         private readonly int _axis;
 
@@ -21,7 +22,7 @@ namespace Distance.KdTree
 
         public static IComparer<Point> Get(int axis)
         {
-            return Comparers.GetOrAdd(axis, a => new PointAxisComparer(a));
+            return Comparers.GetOrAdd(axis, key => new PointAxisComparer(key));
         }
     }
 }

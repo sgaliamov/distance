@@ -7,7 +7,7 @@ namespace Distance.KdTree
         public readonly int Id;
         public readonly double[] Coordinates;
 
-        public Point(int id, double[] coordinates)
+        public Point(int id, params double[] coordinates)
         {
             Id = id;
             Coordinates = coordinates;
