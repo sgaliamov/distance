@@ -1,6 +1,6 @@
 using System;
 using System.Transactions;
-using Distance.DataAccess;
+using Distance.Sql;
 using Microsoft.Extensions.Configuration;
 
 namespace Distance.Tests

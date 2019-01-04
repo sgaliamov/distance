@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Distance.DataAccess.Entities;
+using Distance.Models;
 
 namespace Distance.KdTree
 {
     public sealed class LocationsInMemoryRepository : ILocationsRepository
     {
         private readonly List<Location> _locations = new List<Location>();
-        private Node _root;
+        private KdTree _tree;
 
-        public Task<LocationEntity[]> GetLocations(double latitude, double longitude, int? maxDistance, int? maxResults)
+        public Task<Models.Location[]> GetLocations(double latitude, double longitude, int? maxDistance, int? maxResults)
         {
             BuildIfChanged();
 
-            var result = _root.Nearest(new Point(-1, latitude, longitude), maxDistance ?? double.MaxValue)
-                              .OrderBy(x => x.Distance)
-                              .Select(x => new LocationEntity(
+            var result = _tree.Nearest(new Point(-1, latitude, longitude), maxDistance ?? double.MaxValue)
+                              .Select(x => new Models.Location(
                                   _locations[x.Node.Position.Id].Address,
                                   x.Node.Position.Coordinates[0],
                                   x.Node.Position.Coordinates[1],
@@ -28,12 +27,14 @@ namespace Distance.KdTree
                 result = result.Take(maxResults.Value);
             }
 
+            result = result.OrderBy(x => x.Distance);
+
             return Task.FromResult(result.ToArray());
         }
 
         public Task<long> AddLocation(double latitude, double longitude, string address)
         {
-            _root = null;
+            _tree = null;
 
             _locations.Add(new Location(latitude, longitude, address));
 
@@ -42,14 +43,15 @@ namespace Distance.KdTree
 
         private void BuildIfChanged()
         {
-            if (_root == null)
-            {
-                var points = _locations
-                             .Select((x, i) => new Point(i, x.Latitude, x.Longitude))
-                             .ToArray();
+            if (_tree != null) { return; }
 
-                _root = KdTree.Build(points);
-            }
+            var points = _locations
+                         .Select((x, i) => new Point(i, x.Latitude, x.Longitude))
+                         .ToArray();
+
+            _tree = new KdTree();
+
+            _tree.Build(points);
         }
 
         private struct Location : IEquatable<Location>

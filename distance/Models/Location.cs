@@ -4,32 +4,24 @@ namespace Distance.Models
 {
     public struct Location : IEquatable<Location>
     {
+        public string Address { get; }
+        public double Distance { get; }
         public double Latitude { get; }
         public double Longitude { get; }
 
-        public Location(double latitude, double longitude)
+        public Location(string address, double latitude, double longitude, double distance)
         {
+            Address = address;
             Latitude = latitude;
             Longitude = longitude;
-        }
-
-        public double Distance(Location location)
-        {
-            var rLat1 = Math.PI * Latitude / 180;
-            var rLat2 = Math.PI * location.Latitude / 180;
-            var rTheta = Math.PI * (location.Longitude - Longitude) / 180;
-            var dist = Math.Sin(rLat1) * Math.Sin(rLat2) + Math.Cos(rLat1) * Math.Cos(rLat2) * Math.Cos(rTheta);
-
-            dist = Math.Acos(dist);
-            dist = dist * 180 / Math.PI;
-            dist = dist * 60 * 1.1515;
-
-            return dist * 1609.344;
+            Distance = distance;
         }
 
         public bool Equals(Location other)
         {
-            return Latitude.Equals(other.Latitude)
+            return string.Equals(Address, other.Address)
+                   && Distance.Equals(other.Distance)
+                   && Latitude.Equals(other.Latitude)
                    && Longitude.Equals(other.Longitude);
         }
 
@@ -47,13 +39,13 @@ namespace Distance.Models
         {
             unchecked
             {
-                return (Latitude.GetHashCode() * 397) ^ Longitude.GetHashCode();
-            }
-        }
+                var hashCode = Address != null ? Address.GetHashCode() : 0;
+                hashCode = (hashCode * 397) ^ Distance.GetHashCode();
+                hashCode = (hashCode * 397) ^ Latitude.GetHashCode();
+                hashCode = (hashCode * 397) ^ Longitude.GetHashCode();
 
-        public override string ToString()
-        {
-            return Latitude + ", " + Longitude;
+                return hashCode;
+            }
         }
     }
 }

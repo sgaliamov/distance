@@ -23,7 +23,7 @@ namespace Distance.WebApi.Controllers
             int? results)
         {
             var locations = await _searchService
-                                  .GetLocations(new Location(latitude, longitude), distance, results)
+                                  .GetLocations(new Coordinate(latitude, longitude), distance, results)
                                   .ConfigureAwait(false);
 
             return locations;

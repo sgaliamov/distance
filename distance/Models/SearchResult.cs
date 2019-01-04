@@ -1,9 +1,7 @@
-﻿using Distance.DataAccess.Entities;
-
-namespace Distance.Models
+﻿namespace Distance.Models
 {
     public sealed class SearchResult
     {
-        public LocationEntity[] Locations { get; set; }
+        public Location[] Locations { get; set; }
     }
 }
