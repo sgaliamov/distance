@@ -2,6 +2,6 @@
 {
     public sealed class SearchResult
     {
-        public Location[] Locations { get; set; }
+        public LocationDistance[] Locations { get; set; }
     }
 }

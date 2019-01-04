@@ -16,9 +16,9 @@ namespace Distance.KdTree
             _root = Build(copy, 0, copy.Length, 0);
         }
 
-        public Location[] Nearest(Coordinates target, double radius)
+        public LocationDistance[] Nearest(Coordinates target, double radius)
         {
-            var result = new LinkedList<Location>(); // todo: benchmark
+            var result = new LinkedList<LocationDistance>(); // todo: benchmark
 
             Nearest(_root, target, radius, result);
 
@@ -29,12 +29,12 @@ namespace Distance.KdTree
             Node current,
             Coordinates target,
             double radius,
-            ICollection<Location> result)
+            ICollection<LocationDistance> result)
         {
             var d = target.Distance(current.Location.Coordinates);
             if (d <= radius)
             {
-                result.Add(new Location(current.Location.Address, current.Location.Coordinates, d));
+                result.Add(new LocationDistance(current.Location.Address, current.Location.Coordinates, d));
             }
 
             var value = target.Values[current.Axis];

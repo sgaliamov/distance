@@ -18,7 +18,7 @@ Locations at a given distance.
 - [x] try spatial index
 - [x] create webapi
 - [x] IoC
-- [ ] edge cases
+- [x] edge cases
 - [ ] brute force
 - [ ] create benchmark
 - [ ] create web client?

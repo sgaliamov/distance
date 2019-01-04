@@ -18,14 +18,14 @@ namespace Distance.Sql
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public async Task<Location[]> GetLocations(
+        public async Task<LocationDistance[]> GetLocations(
             Coordinates coordinates,
             int? maxDistance,
             int? maxResults)
         {
             using (var connection = _sqlConnectionFactory.GetConnection())
             {
-                var locations = await connection.QueryAsync<Location>(
+                var locations = await connection.QueryAsync<LocationEntity>(
                                                     GetLocationsStoredProcedure,
                                                     new
                                                     {
@@ -37,7 +37,12 @@ namespace Distance.Sql
                                                     commandType: CommandType.StoredProcedure)
                                                 .ConfigureAwait(false);
 
-                return locations.ToArray();
+                return locations
+                       .Select(x => new LocationDistance(
+                           x.Address,
+                           new Coordinates(x.Latitude, x.Longitude),
+                           x.Distance))
+                       .ToArray();
             }
         }
 

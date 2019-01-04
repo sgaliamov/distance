@@ -17,6 +17,7 @@ namespace Distance.Tests
 
             result.Should().HaveCount(1);
             result[0].Address.Should().Be(Amsterdam);
+            result[0].Coordinates.Should().BeEquivalentTo(AmsterdamCoordinates, opt => opt.ComparingByMembers<Coordinates>());
         }
 
         [Fact]

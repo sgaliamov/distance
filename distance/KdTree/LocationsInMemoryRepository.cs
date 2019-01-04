@@ -10,7 +10,7 @@ namespace Distance.KdTree
         private readonly ICollection<Location> _locations = new LinkedList<Location>();
         private KdTree _tree;
 
-        public Task<Location[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
+        public Task<LocationDistance[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
             BuildIfChanged();
 
@@ -30,7 +30,7 @@ namespace Distance.KdTree
         {
             _tree = null;
 
-            _locations.Add(new Location(address, coordinates, 0));
+            _locations.Add(new Location(address, coordinates));
 
             return Task.FromResult(_locations.LongCount());
         }
