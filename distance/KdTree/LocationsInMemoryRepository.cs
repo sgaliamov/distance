@@ -7,14 +7,14 @@ namespace Distance.KdTree
 {
     public sealed class LocationsInMemoryRepository : ILocationsRepository
     {
-        private readonly ICollection<Location> _locations = new LinkedList<Location>();
+        private ICollection<Location> _locations = new List<Location>();
         private KdTree _tree;
 
         public Task<LocationDistance[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
-            BuildIfChanged();
+            Build();
 
-            var result = _tree.Nearest(coordinates, maxDistance ?? double.MaxValue).AsEnumerable();
+            var result = _tree.Nearest(coordinates, maxDistance ?? double.MaxValue).AsParallel();
 
             if (maxResults.HasValue)
             {
@@ -30,12 +30,18 @@ namespace Distance.KdTree
         {
             _tree = null;
 
-            _locations.Add(new Location(address, coordinates));
+            _locations.Add(new Location(coordinates, address));
 
             return Task.FromResult(_locations.LongCount());
         }
 
-        private void BuildIfChanged()
+        public void SetLocations(ICollection<Location> locations)
+        {
+            _locations = locations;
+            _tree = null;
+        }
+
+        public void Build()
         {
             if (_tree != null) { return; }
 

@@ -5,7 +5,7 @@
         public string Address { get; }
         public Coordinates Coordinates { get; }
 
-        public Location(string address, Coordinates coordinates)
+        public Location(Coordinates coordinates, string address)
         {
             Address = address;
             Coordinates = coordinates;

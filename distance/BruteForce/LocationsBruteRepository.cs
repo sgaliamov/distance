@@ -7,7 +7,7 @@ namespace Distance.BruteForce
 {
     public sealed class LocationsBruteRepository : ILocationsRepository
     {
-        private readonly ICollection<Location> _locations = new LinkedList<Location>();
+        private ICollection<Location> _locations = new List<Location>();
 
         public Task<LocationDistance[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
@@ -35,9 +35,14 @@ namespace Distance.BruteForce
 
         public Task<long> AddLocation(Coordinates coordinates, string address)
         {
-            _locations.Add(new Location(address, coordinates));
+            _locations.Add(new Location(coordinates, address));
 
             return Task.FromResult(_locations.LongCount());
+        }
+
+        public void SetLocations(ICollection<Location> locations)
+        {
+            _locations = locations;
         }
     }
 }
