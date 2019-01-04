@@ -11,32 +11,26 @@ namespace Distance.BruteForce
 
         public Task<LocationDistance[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
-            var result = new LinkedList<LocationDistance>();
+            var query = _locations
+                        .AsParallel()
+                        .Select(location => new LocationDistance(
+                            location.Address,
+                            location.Coordinates,
+                            location.Coordinates.Distance(coordinates)));
 
-            foreach (var location in _locations)
+            if (maxDistance.HasValue)
             {
-                var distance = location.Coordinates.Distance(coordinates);
-
-                if (maxDistance.HasValue)
-                {
-                    if (distance <= maxDistance.Value)
-                    {
-                        result.AddLast(new LocationDistance(location.Address, location.Coordinates, distance));        
-                    }
-                }
-                else
-                {
-                    result.AddLast(new LocationDistance(location.Address, location.Coordinates, distance));
-                }
+                query = query.Where(x => x.Distance <= maxDistance.Value);
             }
 
-            var enumerable = result.OrderBy(x => x.Distance).AsEnumerable();
+            query = query.OrderBy(x => x.Distance);
+
             if (maxResults.HasValue)
             {
-                enumerable = enumerable.Take(maxResults.Value);
+                query = query.Take(maxResults.Value);
             }
 
-            return Task.FromResult(enumerable.ToArray());
+            return Task.FromResult(query.ToArray());
         }
 
         public Task<long> AddLocation(Coordinates coordinates, string address)
