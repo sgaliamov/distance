@@ -3,3 +3,5 @@
 [Bb]in
 *.csv
 *.pdf
+*.dbmdl
+*.jfm
