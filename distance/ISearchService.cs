@@ -5,6 +5,6 @@ namespace Distance
 {
     public interface ISearchService
     {
-        Task<SearchResult> GetLocations(Location location, int maxDistance, int maxResults);
+        Task<SearchResult> GetLocations(Location location, int? maxDistance, int? maxResults);
     }
 }

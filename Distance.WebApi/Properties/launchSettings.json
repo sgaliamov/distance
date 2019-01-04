@@ -4,7 +4,7 @@
     "Distance.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/locations",
+      "launchUrl": "locations",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

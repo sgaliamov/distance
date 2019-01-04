@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading.Tasks;
+using Distance.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Distance.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class LocationsController : ControllerBase
     {
@@ -14,10 +15,18 @@ namespace Distance.WebApi.Controllers
             _searchService = searchService;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [HttpGet("{latitude}/{longitude}/{distance?}/{results?}")]
+        public async Task<ActionResult<SearchResult>> Get(
+            double latitude,
+            double longitude,
+            int? distance,
+            int? results)
         {
-            return _searchService.;
+            var locations = await _searchService
+                                  .GetLocations(new Location(latitude, longitude), distance, results)
+                                  .ConfigureAwait(false);
+
+            return locations;
         }
     }
 }
