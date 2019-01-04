@@ -6,7 +6,7 @@ namespace Distance.WebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class LocationsController : ControllerBase
+    public sealed class LocationsController : ControllerBase
     {
         private readonly ISearchService _searchService;
 
