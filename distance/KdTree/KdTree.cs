@@ -6,10 +6,10 @@ namespace Distance.KdTree
     {
         public Node Build(Point[] points)
         {
-            return Build(points, 0);
+            return Build(points, 0, points.Length, 0);
         }
 
-        private static Node Build(Point[] points, int depth)
+        private static Node Build(Point[] points, int start, int length, int depth)
         {
             if (points.Length == 0)
             {
@@ -17,21 +17,21 @@ namespace Distance.KdTree
             }
 
             var axis = depth % 3;
+            Array.Sort(points, start, length, PointAxisComparer.Get(axis));
 
-            Array.Sort(points, PointAxisComparer.Get(axis));
+            var half = start + length / 2;
+            var median = points[half];
 
-            var median = points.Length / 2;
+            var leftStart = start;
+            var leftLength = half - start;
 
-            var left = new Point[median];
-            Buffer.BlockCopy(points, 0, left, 0, median);
+            var rightStart = half + 1;
+            var rightLength = length - length / 2 - 1;
 
-            var right = new Point[points.Length - 1];
-            Buffer.BlockCopy(points, median, right, 0, right.Length);
+            var left = Build(points, leftStart, leftLength, depth + 1);
+            var right = Build(points, rightStart, rightLength, depth + 1);
 
-            return new Node(
-                points[median],
-                Build(left, depth + 1),
-                Build(right, depth + 1));
+            return new Node(median, left, right, axis);
         }
     }
 }
