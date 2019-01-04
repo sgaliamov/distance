@@ -7,17 +7,17 @@ namespace Distance.WebApi.Controllers
     [ApiController]
     public class LocationsController : ControllerBase
     {
-        //private readonly ISearchService _searchService;
+        private readonly ISearchService _searchService;
 
-        //public LocationsController(ISearchService searchService)
-        //{
-        //    _searchService = searchService;
-        //}
+        public LocationsController(ISearchService searchService)
+        {
+            _searchService = searchService;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new[] { "value1", "value2" };
+            return _searchService.;
         }
     }
 }

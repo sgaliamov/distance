@@ -42,7 +42,7 @@ namespace Distance.DataAccess
             }
         }
 
-        public async Task<long> CreateLocation(double latitude, double longitude, string address)
+        public async Task<long> AddLocation(double latitude, double longitude, string address)
         {
             using (var connection = _sqlConnectionFactory.GetConnection())
             {
