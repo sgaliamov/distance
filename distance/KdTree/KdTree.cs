@@ -74,7 +74,7 @@ namespace Distance.KdTree
                 return null;
             }
 
-            var axis = depth % 3;
+            var axis = depth % 2;
             Array.Sort(locations, start, length, CoordinatesComparer.Get(axis));
 
             var half = start + length / 2;

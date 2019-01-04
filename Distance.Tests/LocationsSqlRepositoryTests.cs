@@ -1,7 +1,10 @@
 using System;
+using System.Threading.Tasks;
 using System.Transactions;
+using Distance.Models;
 using Distance.Sql;
 using Microsoft.Extensions.Configuration;
+using Xunit;
 
 namespace Distance.Tests
 {
@@ -20,6 +23,9 @@ namespace Distance.Tests
                 TransactionScopeOption.RequiresNew,
                 TransactionScopeAsyncFlowOption.Enabled);
         }
+
+        
+       
 
         protected override ILocationsRepository Repository { get; }
 
