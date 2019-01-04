@@ -16,7 +16,7 @@ namespace Distance.Sql
                 throw new ArgumentNullException(nameof(configuration));
             }
 
-            _connectionString = configuration.GetConnectionString("Default") 
+            _connectionString = configuration.GetConnectionString("Default")
                                 ?? throw new ArgumentException("Can't get connections string.", nameof(configuration));
         }
 

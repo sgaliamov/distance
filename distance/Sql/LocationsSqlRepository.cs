@@ -19,8 +19,7 @@ namespace Distance.Sql
         }
 
         public async Task<Location[]> GetLocations(
-            double latitude,
-            double longitude,
+            Coordinates coordinates,
             int? maxDistance,
             int? maxResults)
         {
@@ -30,8 +29,8 @@ namespace Distance.Sql
                                                     GetLocationsStoredProcedure,
                                                     new
                                                     {
-                                                        Longitude = longitude,
-                                                        Latitude = latitude,
+                                                        coordinates.Longitude,
+                                                        coordinates.Latitude,
                                                         Count = maxResults,
                                                         Distance = maxDistance
                                                     },
@@ -42,7 +41,7 @@ namespace Distance.Sql
             }
         }
 
-        public async Task<long> AddLocation(double latitude, double longitude, string address)
+        public async Task<long> AddLocation(Coordinates coordinates, string address)
         {
             using (var connection = _sqlConnectionFactory.GetConnection())
             {
@@ -51,8 +50,8 @@ namespace Distance.Sql
                                  InsertLocationsStoredProcedure,
                                  new
                                  {
-                                     Longitude = longitude,
-                                     Latitude = latitude,
+                                     coordinates.Longitude,
+                                     coordinates.Latitude,
                                      Address = address
                                  },
                                  commandType: CommandType.StoredProcedure)

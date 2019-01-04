@@ -5,7 +5,7 @@ namespace Distance
 {
     public interface ILocationsRepository
     {
-        Task<Location[]> GetLocations(double latitude, double longitude, int? maxDistance, int? maxResults);
-        Task<long> AddLocation(double latitude, double longitude, string address);
+        Task<Location[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults);
+        Task<long> AddLocation(Coordinates coordinates, string address);
     }
 }

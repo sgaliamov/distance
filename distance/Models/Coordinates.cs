@@ -9,7 +9,7 @@ namespace Distance.Models
         public double Latitude { get; }
         public double Longitude { get; }
         public double[] Values { get; }
-        
+
         public Coordinates(double latitude, double longitude)
         {
             Latitude = latitude;

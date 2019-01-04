@@ -10,11 +10,11 @@ namespace Distance.KdTree
         private readonly ICollection<Location> _locations = new LinkedList<Location>();
         private KdTree _tree;
 
-        public Task<Location[]> GetLocations(double latitude, double longitude, int? maxDistance, int? maxResults)
+        public Task<Location[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
             BuildIfChanged();
 
-            var result = _tree.Nearest(new Coordinates(latitude, longitude), maxDistance ?? double.MaxValue).AsEnumerable();
+            var result = _tree.Nearest(coordinates, maxDistance ?? double.MaxValue).AsEnumerable();
 
             if (maxResults.HasValue)
             {
@@ -26,11 +26,11 @@ namespace Distance.KdTree
             return Task.FromResult(result.ToArray());
         }
 
-        public Task<long> AddLocation(double latitude, double longitude, string address)
+        public Task<long> AddLocation(Coordinates coordinates, string address)
         {
             _tree = null;
 
-            _locations.Add(new Location(address, new Coordinates(latitude, longitude), 0));
+            _locations.Add(new Location(address, coordinates, 0));
 
             return Task.FromResult(_locations.LongCount());
         }
