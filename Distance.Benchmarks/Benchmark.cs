@@ -45,7 +45,7 @@ namespace Distance.Benchmarks
 
             _bruteRepository.SetLocations(locations);
             _inMemoryRepository.SetLocations(locations);
-            _inMemoryRepository.Build();
+            _inMemoryRepository.BuildTree();
         }
 
         [Benchmark(Baseline = true)]

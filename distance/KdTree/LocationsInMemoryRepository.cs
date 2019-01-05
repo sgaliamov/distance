@@ -12,7 +12,7 @@ namespace Distance.KdTree
 
         public Task<LocationDistance[]> GetLocations(Coordinates coordinates, int? maxDistance, int? maxResults)
         {
-            Build();
+            BuildTree();
 
             var result = _tree.Nearest(coordinates, maxDistance ?? double.MaxValue).AsParallel();
 
@@ -41,7 +41,7 @@ namespace Distance.KdTree
             _tree = null;
         }
 
-        public void Build()
+        public void BuildTree()
         {
             if (_tree != null) { return; }
 
