@@ -6,9 +6,9 @@ namespace Distance.Models
     {
         private const double EarthRadius = 180 * 60 * 1.1515 * 1609.344 / Math.PI;
 
-        public double Latitude { get; }
-        public double Longitude { get; }
-        public double[] Values { get; }
+        public readonly double Latitude;
+        public readonly double Longitude;
+        public readonly double[] Values;
 
         public Coordinates(double latitude, double longitude)
         {

@@ -25,7 +25,7 @@ namespace Distance.KdTree
 #if DEBUG
             Counter = 0;
 #endif
-            var result = new LinkedList<LocationDistance>(); // todo: benchmark
+            var result = new List<LocationDistance>();
 
             Nearest(_root, target, radius, result);
 
@@ -104,7 +104,7 @@ namespace Distance.KdTree
             return new Node(median, left, right, axis);
         }
 
-        private sealed class Node // todo: benchmark with struct
+        private sealed class Node
         {
             public readonly int Axis;
             public readonly Node Left;

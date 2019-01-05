@@ -2,9 +2,9 @@
 {
     public struct LocationDistance
     {
-        public string Address { get; }
-        public double Distance { get; }
-        public Coordinates Coordinates { get; }
+        public readonly string Address;
+        public readonly double Distance;
+        public readonly Coordinates Coordinates;
 
         public LocationDistance(string address, Coordinates coordinates, double distance)
         {
