@@ -77,7 +77,7 @@ namespace Distance.Benchmarks
 
         private Coordinates RandomCoordinates()
         {
-            return new Coordinates(_random.Next(-90, 91), _random.Next(-180, 181));
+            return new Coordinates(90 - _random.NextDouble() * 180, 180 - _random.NextDouble() * 360);
         }
     }
 }

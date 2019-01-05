@@ -37,8 +37,9 @@ namespace Distance.KdTree
 
         public void SetLocations(ICollection<Location> locations)
         {
-            _locations = locations;
             _tree = null;
+
+            _locations = locations;
         }
 
         public void BuildTree()
