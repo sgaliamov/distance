@@ -14,7 +14,7 @@ namespace Distance.Tests
         public CompareTests()
         {
             var locations = Enumerable
-                            .Range(0, 100_000)
+                            .Range(0, 1_000_000)
                             .AsParallel()
                             .Select(x => new Location(RandomCoordinates(), "dummy"))
                             .ToArray();
@@ -29,10 +29,13 @@ namespace Distance.Tests
         {
             var target = RandomCoordinates();
 
-            var brute = await _bruteRepository.GetLocations(target, 100_000, 10).ConfigureAwait(false);
-            var kdTree = await _inMemoryRepository.GetLocations(target, 100_000, 10).ConfigureAwait(false);
+            var brute = await _bruteRepository.GetLocations(target, 1_000_000, 100).ConfigureAwait(false);
+            var kdTree = await _inMemoryRepository.GetLocations(target, 1_000_000, 100).ConfigureAwait(false);
 
-            brute.Should().BeEquivalentTo(kdTree, options => options.WithStrictOrdering().ComparingByMembers<LocationDistance>());
+            brute.Should().BeEquivalentTo(kdTree, options => options
+                                                             .WithStrictOrdering()
+                                                             .ComparingByMembers<Coordinates>()
+                                                             .ComparingByMembers<LocationDistance>());
         }
 
         private readonly Random _random = new Random();
