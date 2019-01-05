@@ -15,7 +15,7 @@ namespace Distance.Benchmarks
     [RankColumn]
     public class Benchmark
     {
-        private const int MaxDistance = 100_000;
+        private const int MaxDistance = 600_000;
         private const int MaxResults = 10;
         private const int Times = 10;
         private readonly LocationsBruteRepository _bruteRepository = new LocationsBruteRepository();
@@ -53,7 +53,7 @@ namespace Distance.Benchmarks
         {
             for (var i = 0; i < Times; i++)
             {
-                Task.WhenAll(_sqlRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
+                Task.WaitAll(_sqlRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
             }
         }
 
@@ -62,7 +62,7 @@ namespace Distance.Benchmarks
         {
             for (var i = 0; i < Times; i++)
             {
-                Task.WhenAll(_inMemoryRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
+                Task.WaitAll(_inMemoryRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
             }
         }
 
@@ -71,7 +71,7 @@ namespace Distance.Benchmarks
         {
             for (var i = 0; i < Times; i++)
             {
-                Task.WhenAll(_bruteRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
+                Task.WaitAll(_bruteRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
             }
         }
 
