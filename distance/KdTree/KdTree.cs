@@ -6,7 +6,7 @@ using Distance.Models;
 
 namespace Distance.KdTree
 {
-    public class KdTree
+    public sealed class KdTree
     {
 #if DEBUG
         public static int Counter;
@@ -50,8 +50,9 @@ namespace Distance.KdTree
 
             var value = target.Values[current.Axis];
             var median = current.Location.Coordinates.Values[current.Axis];
-            var goRight = value - median > 0;
+            var distanceToMedian = current.Distance(target);
 
+            var goRight = value - median > 0;
             if (goRight)
             {
                 if (current.Right != null)
@@ -59,7 +60,7 @@ namespace Distance.KdTree
                     Nearest(current.Right, target, radius, result);
                 }
 
-                if (current.Left != null && distance <= radius)
+                if (current.Left != null && distanceToMedian <= radius)
                 {
                     Nearest(current.Left, target, radius, result);
                 }
@@ -71,7 +72,7 @@ namespace Distance.KdTree
                     Nearest(current.Left, target, radius, result);
                 }
 
-                if (current.Right != null && distance <= radius)
+                if (current.Right != null && distanceToMedian <= radius)
                 {
                     Nearest(current.Right, target, radius, result);
                 }
@@ -116,6 +117,13 @@ namespace Distance.KdTree
                 Left = left;
                 Right = right;
                 Axis = axis;
+            }
+
+            public double Distance(Coordinates target)
+            {
+                return Axis == 0
+                           ? new Coordinates(Location.Coordinates.Latitude, target.Longitude).Distance(target)
+                           : new Coordinates(target.Latitude, Location.Coordinates.Longitude).Distance(target);
             }
         }
     }
