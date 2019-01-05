@@ -2,8 +2,8 @@
 {
     public struct Location
     {
-        public readonly string Address;
-        public readonly Coordinates Coordinates;
+        public string Address { get; }
+        public Coordinates Coordinates { get; }
 
         public Location(Coordinates coordinates, string address)
         {

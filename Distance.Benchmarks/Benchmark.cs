@@ -49,20 +49,20 @@ namespace Distance.Benchmarks
         }
 
         [Benchmark(Baseline = true)]
+        public void KdTree()
+        {
+            for (var i = 0; i < Times; i++)
+            {
+                Task.WaitAll(_inMemoryRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
+            }
+        }
+
+        [Benchmark]
         public void SqlServer()
         {
             for (var i = 0; i < Times; i++)
             {
                 Task.WaitAll(_sqlRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
-            }
-        }
-
-        [Benchmark]
-        public void InMemory()
-        {
-            for (var i = 0; i < Times; i++)
-            {
-                Task.WaitAll(_inMemoryRepository.GetLocations(RandomCoordinates(), MaxDistance, MaxResults));
             }
         }
 
@@ -81,11 +81,3 @@ namespace Distance.Benchmarks
         }
     }
 }
-
-/*
-     Method |          Mean |       Error |      StdDev |        Median | Ratio | Rank |
------------ |--------------:|------------:|------------:|--------------:|------:|-----:|
-  SqlServer | 18,916.102 ms | 376.5965 ms | 679.0812 ms | 18,818.470 ms | 1.000 |    3 |
-   InMemory |      1.727 ms |   0.0360 ms |   0.0602 ms |      1.707 ms | 0.000 |    1 |
- BruteForce |     16.821 ms |   0.3266 ms |   0.3208 ms |     16.874 ms | 0.001 |    2 |
- */

@@ -1,34 +1,31 @@
 # Distance
 
-Locations at a given distance.
+Solution contains implementation of [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) to find k nearest neighbors on Earth surface.
 
-## Requirements
+For reference it contains [brute force](./distance/BruteForce/LocationsBruteRepository.cs) implementation and implementation based on [MS SQL Server Spatial Index](./distance/Sql/LocationsSqlRepository.cs).
 
-* It must be possible to set a maximum distance.
-* It must be possible to set a maximum number of results.
-* Results should be ordered by distance.
-* The system should not slow down significantly if the number of locations increases.
+## Benchmark
 
-## Roadmap
+``` ini
+BenchmarkDotNet=v0.11.3, OS=Windows 10.0.17134.472 (1803/April2018Update/Redstone4)
+Intel Core i7-6700HQ CPU 2.60GHz (Skylake), 1 CPU, 8 logical and 4 physical cores
+Frequency=2531256 Hz, Resolution=395.0608 ns, Timer=TSC
+.NET Core SDK=2.2.101
+  [Host]     : .NET Core 2.2.0 (CoreCLR 4.6.27110.04, CoreFX 4.6.27110.04), 64bit RyuJIT
+  DefaultJob : .NET Core 2.2.0 (CoreCLR 4.6.27110.04, CoreFX 4.6.27110.04), 64bit RyuJIT
 
-- [x] research, find algorithm: <https://en.wikipedia.org/wiki/Spatial_database#Spatial_index>
-- [x] check sql server capabilities
-- [x] create repo and data structures
-- [x] create BLL
-- [x] try spatial index
-- [x] create webapi
-- [x] IoC
-- [x] edge cases
-- [ ] brute force
-- [ ] create benchmark
-- [ ] create web client?
-- [ ] T4 to generate sql constants
+50000 points
+```
 
-## Reasoning
+|     Method |          Mean |       Error |        StdDev |        Median | Ratio | Rank |
+|----------- |--------------:|------------:|--------------:|--------------:|------:|-----:|
+|   KdTree |      2.731 ms |   0.0699 ms |     0.0653 ms |      2.711 ms | 0.000 |    1 |
+|  SqlServer | 19,529.218 ms | 432.9697 ms | 1,163.1449 ms | 19,381.186 ms | 1.000 |    3 |
+| BruteForce |     17.587 ms |   0.3512 ms |     0.7095 ms |     17.492 ms | 0.001 |    2 |
 
-- why sql server?
-  - tested solution
-  - maintainability
-  - integration with other data
-- <http://epsg.io/4326>
-- <https://www.movable-type.co.uk/scripts/latlong.html>
+## Links
+
+* <https://en.wikipedia.org/wiki/Spatial_database#Spatial_index>
+* <http://epsg.io/4326>
+* <https://www.movable-type.co.uk/scripts/latlong.html>
+* <https://www.youtube.com/watch?v=E1_WCdUAtyE>
