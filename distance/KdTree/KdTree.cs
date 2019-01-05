@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Distance.Models;
 
 namespace Distance.KdTree
 {
     public class KdTree
     {
+#if DEBUG
+        public static int Counter;
+#endif
         private Node _root;
 
         public void Build(IEnumerable<Location> locations)
@@ -31,6 +35,10 @@ namespace Distance.KdTree
             double radius,
             ICollection<LocationDistance> result)
         {
+#if DEBUG
+            Interlocked.Increment(ref Counter);
+#endif
+
             var d = target.Distance(current.Location.Coordinates);
             if (d <= radius)
             {

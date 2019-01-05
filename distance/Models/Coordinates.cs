@@ -31,5 +31,10 @@ namespace Distance.Models
 
             return Math.Acos(dist) * EarthRadius;
         }
+
+        public override string ToString()
+        {
+            return $"{Latitude}, {Longitude}";
+        }
     }
 }

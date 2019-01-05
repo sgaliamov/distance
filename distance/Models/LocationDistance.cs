@@ -12,5 +12,10 @@
             Distance = distance;
             Coordinates = coordinates;
         }
+
+        public override string ToString()
+        {
+            return $"{Address} ({Coordinates}), {Distance}";
+        }
     }
 }

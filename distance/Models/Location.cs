@@ -10,5 +10,10 @@
             Address = address;
             Coordinates = coordinates;
         }
+
+        public override string ToString()
+        {
+            return $"{Address} ({Coordinates})";
+        }
     }
 }

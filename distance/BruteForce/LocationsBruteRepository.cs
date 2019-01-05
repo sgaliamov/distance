@@ -23,7 +23,7 @@ namespace Distance.BruteForce
                 query = query.Where(x => x.Distance <= maxDistance.Value);
             }
 
-            query = query.OrderBy(x => x.Distance);
+            query = query.OrderBy(x => x.Distance).ThenBy(x => x.Coordinates.Latitude).ThenBy(x => x.Coordinates.Longitude);
 
             if (maxResults.HasValue)
             {
