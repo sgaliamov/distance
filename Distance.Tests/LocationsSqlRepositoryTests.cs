@@ -24,9 +24,6 @@ namespace Distance.Tests
                 TransactionScopeAsyncFlowOption.Enabled);
         }
 
-        
-       
-
         protected override ILocationsRepository Repository { get; }
 
         public void Dispose()

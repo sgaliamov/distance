@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{965E2556-E61B-4F1F-AB41-6EB975C63852}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		locations.csv = locations.csv
 		readme.md = readme.md
 	EndProjectSection
 EndProject
@@ -18,7 +17,7 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Distance.SqlDb", "Distance.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distance.WebApi", "Distance.WebApi\Distance.WebApi.csproj", "{7A56EAA4-ACAD-452B-BA90-A7443286D072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Distance.Benchmarks", "Distance.Benchmarks\Distance.Benchmarks.csproj", "{4979B432-56E8-4E18-A960-AD9BA312B068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Distance.Benchmarks", "Distance.Benchmarks\Distance.Benchmarks.csproj", "{4979B432-56E8-4E18-A960-AD9BA312B068}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
