@@ -1,4 +1,4 @@
-﻿DECLARE @Count INT = 1000000
+﻿DECLARE @Count INT = 100000
 DECLARE @Index INT = 0
 
 WHILE @Index < @Count BEGIN

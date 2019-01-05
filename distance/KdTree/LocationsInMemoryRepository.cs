@@ -15,13 +15,13 @@ namespace Distance.KdTree
             Build();
 
             var result = _tree.Nearest(coordinates, maxDistance ?? double.MaxValue).AsParallel();
+            
+            result = result.OrderBy(x => x.Distance);
 
             if (maxResults.HasValue)
             {
                 result = result.Take(maxResults.Value);
             }
-
-            result = result.OrderBy(x => x.Distance);
 
             return Task.FromResult(result.ToArray());
         }
