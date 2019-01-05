@@ -2,7 +2,7 @@
 
 Solution contains implementation of [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) to find k nearest neighbors on Earth surface.
 
-For reference it contains [brute force](./distance/BruteForce/LocationsBruteRepository.cs) implementation and implementation based on [MS SQL Server Spatial Index](./distance/Sql/LocationsSqlRepository.cs).
+For reference also it contains [brute force](./distance/BruteForce/LocationsBruteRepository.cs) version and implementation based on [MS SQL Server Spatial Index](./distance/Sql/LocationsSqlRepository.cs).
 
 ## Benchmarks
 
