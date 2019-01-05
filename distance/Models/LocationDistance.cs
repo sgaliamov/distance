@@ -15,7 +15,7 @@
 
         public override string ToString()
         {
-            return $"{Address} ({Coordinates}), {Distance}";
+            return $"({Coordinates})";
         }
     }
 }
